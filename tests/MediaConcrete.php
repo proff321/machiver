@@ -15,7 +15,7 @@ class MediaConcrete extends Media
         return '1234';
     }
 
-    public function isType(Media $media): bool
+    public static function isType($media): bool
     {
         return false;
     }

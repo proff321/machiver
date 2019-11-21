@@ -61,6 +61,8 @@ abstract class Media
      * about the media instead of relying on file extension alone.  This will
      * help to reduce collisions where multiple classes can handle a given type
      * of media.
+     *
+     * @param resource $fileHandle File handle provided by the MediaManager
      */
-    public abstract function isType(Media $media): bool;
+    public static abstract function isType($fileHandle): bool;
 }

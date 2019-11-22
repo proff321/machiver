@@ -23,31 +23,42 @@ class Jpeg extends Photo
      */
     public static function isType($fileHandle): bool
     {
-        // X'FF', SOI, X'FF', APP0, <2 bytes to be skipped>, "JFIF", X'00'.
-        // The SOI marker is first and is part of the ITU T-81 standard
-        $soiMarker = hex2bin('FFD8');
+        /**
+         * The JPEG File Interchange Format states that you can identify a file
+         * by the following sequence:
+         *
+         * X'FF', SOI, X'FF', APP0, <2 bytes to be skipped>, "JFIF", X'00'
+         *
+         * It's not obvious at first glace what "SOI" and "APP0" mean so here's
+         * an explanation.  SOI and APP0 are markers which are specified as
+         * part of the ITU T-81 standard.  They are two bytes each preceded by
+         * X'FF'.  Their actual values are as follows:
+         *
+         * SOI - X'D8'
+         * APP - X'E0'
+         *
+         * If you're looking for the APP0 marker definition in the spec you'll
+         * need to look for just "APP" and notice that it is a range of values
+         * reserved for "application segments".  See table B.1 for more
+         * information on the markers.
+         *
+         * After the markers are two bytes which can be skipped and then the
+         * string "JFIF" followed by a null terminator X"00".  The "JFIF" is
+         * really what we're looking for, but the other bytes ensure it is in
+         * the correct location.
+         *
+         * A regular expression is used to scan the file contents and find the
+         * correct sequence of bytes.  What's nice about this approach is that
+         * we can rely on the language to do the heavy lifting of skipping the
+         * arbitrary bytes in the middle (using \C) instead of having to seek
+         * within the file.
+         */
 
-        // Then we have the APP0 marker, also defined by the ITU T-81 standard
-        $appMarker = hex2bin('FFE0');
-
-        // skip two bites
-        // TODO:  Not sure how to do this right now, maybe use regex?
-
-        // Then the string 'JFIF' which is specified by the ___ standard
-        $formatFlag = 'JFIF';
-
-        // Null string terminator
-        $nullTerminator = hex2bin('00');
-
-        // TODO:  Use the stream_get_line method to clean this up
+        // TODO:  Update the method signature to include the true file size
         $fileContents = fread($fileHandle, 100000000);
 
-        $indicator = $soiMarker . $appMarker . $formatFlag . $nullString;
-
-        if (
-            strpos($fileContents, $soiMarker . $appMarker) !== false
-            && strpos($fileContents, $formatFlag . $nullTerminator) !== false
-        ) {
+        $regex = '/\xFF\xD8\xFF\xE0\C\CJFIF\x00/';
+        if (preg_match($regex, $fileContents, $matches) === 1) {
             return true;
         }
 

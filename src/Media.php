@@ -64,5 +64,5 @@ abstract class Media
      *
      * @param resource $fileHandle File handle provided by the MediaManager
      */
-    public static abstract function isType($fileHandle): bool;
+    public static abstract function isType($fileHandle, int $fileSize): bool;
 }

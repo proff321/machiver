@@ -15,7 +15,7 @@ class MediaConcrete extends Media
         return '1234';
     }
 
-    public static function isType($media): bool
+    public static function isType($fileHandle, int $fileSize): bool
     {
         return false;
     }

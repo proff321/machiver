@@ -21,7 +21,7 @@ class Jpeg extends Photo
      * For more information on the file format please see the following link:
      * https://www.w3.org/Graphics/JPEG/jfif.txt
      */
-    public static function isType($fileHandle): bool
+    public static function isType($fileHandle, int $fileSize): bool
     {
         /**
          * The JPEG File Interchange Format states that you can identify a file

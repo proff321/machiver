@@ -54,8 +54,7 @@ class Jpeg extends Photo
          * within the file.
          */
 
-        // TODO:  Update the method signature to include the true file size
-        $fileContents = fread($fileHandle, 100000000);
+        $fileContents = fread($fileHandle, $fileSize);
 
         $regex = '/\xFF\xD8\xFF\xE0\C\CJFIF\x00/';
         if (preg_match($regex, $fileContents, $matches) === 1) {

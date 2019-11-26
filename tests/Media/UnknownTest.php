@@ -10,7 +10,7 @@ use Exception;
 use Machiver\Media\Unknown;
 use PHPUnit\Framework\TestCase;
 
-class JpegTest extends TestCase
+class UnknownTest extends TestCase
 {
     public function testShouldThrowExceptionWhenGettingUUID()
     {

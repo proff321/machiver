@@ -7,3 +7,5 @@ This application is designed to make it easy to archive the media from your favo
 
 ### Testing
 To run the tests for this project simply issue command `docker-compose run --rm test`.  This will create a container, run the tests, and then remove the container when done.  The command will output the test results using the testdox format.
+
+If you prefer a different format, then append the correct PHPUnit argument to the aforementioned command.  For example, to use the teamcity format, the command would become `docker-compose run --rm test --teamcity`.

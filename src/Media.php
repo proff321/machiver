@@ -50,7 +50,7 @@ abstract class Media
      * This ID must be universally unique as it is used for various management
      * tasks such as logging the history of the media.
      */
-    public abstract function uuid(): string;
+    abstract public function uuid(): string;
 
     /**
      * Determine if the class is responsible for the provided media type.  This
@@ -64,5 +64,5 @@ abstract class Media
      *
      * @param resource $fileHandle File handle provided by the MediaManager
      */
-    public static abstract function isType($fileHandle, int $fileSize): bool;
+    abstract public static function isType($fileHandle, int $fileSize): bool;
 }

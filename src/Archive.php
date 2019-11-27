@@ -22,7 +22,7 @@ abstract class Archive
      * this method.  The actual validation of the archive settings comes later
      * when the archive is instantiated.
      */
-    public static abstract function isEnabled(): bool;
+    abstract public static function isEnabled(): bool;
 
     /**
      * This method does the actual work of archiving the provided media.  It is

@@ -8,7 +8,7 @@ declare(strict_types=1);
 
 namespace Machiver;
 
-use Exception;
+use Machiver\Media;
 
 abstract class Archive
 {
@@ -23,4 +23,17 @@ abstract class Archive
      * when the archive is instantiated.
      */
     public static abstract function isEnabled(): bool;
+
+    /**
+     * This method does the actual work of archiving the provided media.  It is
+     * expected to return `true` only if it can validate that it has performed
+     * its archival duties successfully.  If any errors occurr, including a
+     * validation failure, then the method should return `false`.
+     *
+     * This is a very intentional part of the design as a user should feel
+     * confident that an archive did what it adverstised.  This will allow a
+     * user to safely offload the media from the source device without fear of
+     * losing the source media.
+     */
+    abstract public function process(Media $media): bool;
 }

@@ -1,0 +1,7 @@
+version: "3.6"
+services:
+    test:
+        image: php:latest
+        volumes:
+            - ./:/app
+        command: ["php", "/app/vendor/phpunit/phpunit/phpunit", "--bootstrap", "/app/vendor/composer/autoload_files.php", "--testdox",  "/app/tests/"]

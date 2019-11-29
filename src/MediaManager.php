@@ -15,8 +15,16 @@ declare(strict_types=1);
 
 namespace Machiver;
 
+use Exception;
+
 class MediaManager
 {
+    /** @var string The directory which contains the source media */
+    public const SOURCE_DIR = '/machiver/media';
+
+    /** @var resource The file handle for the source media directory */
+    private $sourceDirHandle;
+
     /**
      * The constructor will only validate that the directory is available and
      * readable.  An exception is thrown if the directory is not readable.
@@ -26,9 +34,22 @@ class MediaManager
      */
     public function __construct()
     {
-        // Open the directory "/machiver/media"
-        // Check that it is a directory
-        // Check that it is readable
+        if (!is_dir(self::SOURCE_DIR)) {
+            throw new Exception("Location `{self::SOURCE_DIR}` must be a directory");
+        }
+
+        if (false === ($directoryHandle = opendir(self::SOURCE_DIR))) {
+            throw new Exception("Cannot open directory `{self::SOURCE_DIR}`");
+        }
+
+        if (false === readdir($directoryHandle)) {
+            throw new Exception(
+                "Directory `{self::SOURCE_DIR}` cannot be empty, or is unreadable"
+            );
+        }
+        
+        rewinddir($directoryHandle);
+        $this->sourceDirHandle = $directoryHandle;
     }
 
     public function process()

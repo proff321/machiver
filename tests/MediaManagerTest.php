@@ -9,15 +9,22 @@ namespace Machiver\Tests;
 use PHPUnit\Framework\TestCase;
 use Machiver\MediaManager;
 use Exception;
+use org\bovigo\vfs\vfsStream;
 
 class MediaManagerTest extends TestCase
 {
+    private $root;
+
+    public function setUp(): void {
+        $this->root = vfsStream::setup();
+    }
+
     public function testShouldThrowExceptionOnMissingDirectory()
     {
+        $this->assertFalse($this->root->hasChild('/machiver/media'));
         $this->expectException(Exception::class);
         $this->expectExceptionMessage('must be a directory');
         $media = new MediaManager();
-        // TODO: Update test to use mock filesystem
     }
 
     public function testShouldThrowExceptionOnFileInsteadOfDirectory()

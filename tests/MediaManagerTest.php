@@ -10,9 +10,11 @@ use PHPUnit\Framework\TestCase;
 use Machiver\MediaManager;
 use Exception;
 use org\bovigo\vfs\vfsStream;
+use org\bovigo\vfs\vfsStreamDirectory;
 
 class MediaManagerTest extends TestCase
 {
+    /** @var vfsStreamDirectory */
     private $root;
 
     public function setUp(): void {
@@ -29,7 +31,12 @@ class MediaManagerTest extends TestCase
 
     public function testShouldThrowExceptionOnFileInsteadOfDirectory()
     {
-        $this->markTestIncomplete('Not implemented');
+        $mockFile = vfsStream::newFile('/machiver/media')
+            ->at($this->root);
+        $this->assertTrue($this->root->hasChild('/machiver/media'));
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage('must be a directory');
+        $media = new MediaManager();
     }
 
     public function testShouldThrowExceptionOnEmptyDirectory()

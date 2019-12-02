@@ -20,7 +20,7 @@ use Exception;
 class MediaManager
 {
     /** @var string The directory which contains the source media */
-    public const SOURCE_DIR = '/machiver/media';
+    public const DEFAULT_SOURCE_DIR = '/machiver/media';
 
     /** @var resource The file handle for the source media directory */
     private $sourceDirHandle;
@@ -32,19 +32,19 @@ class MediaManager
      * utility on a directory which they cannot access.  Likely a result of
      * running outside of a Docker container. 
      */
-    public function __construct()
+    public function __construct(string $rootDirectory = self::DEFAULT_SOURCE_DIR)
     {
-        if (!is_dir(self::SOURCE_DIR)) {
-            throw new Exception("Location `{self::SOURCE_DIR}` must be a directory");
+        if (!is_dir($rootDirectory)) {
+            throw new Exception("Location `{$rootDirectory}` must be a directory");
         }
 
-        if (false === ($directoryHandle = opendir(self::SOURCE_DIR))) {
-            throw new Exception("Cannot open directory `{self::SOURCE_DIR}`");
+        if (false === ($directoryHandle = opendir($rootDirectory))) {
+            throw new Exception("Cannot open directory `{$rootDirectory}`");
         }
 
         if (false === readdir($directoryHandle)) {
             throw new Exception(
-                "Directory `{self::SOURCE_DIR}` cannot be empty, or is unreadable"
+                "Directory `{$rootDirectory}` cannot be empty"
             );
         }
         

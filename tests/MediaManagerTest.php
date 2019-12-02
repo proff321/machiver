@@ -18,12 +18,12 @@ class MediaManagerTest extends TestCase
     private $root;
 
     public function setUp(): void {
-        $this->root = vfsStream::setup();
+        $this->root = vfsStream::setup('machiver');
     }
 
     public function testShouldThrowExceptionOnMissingDirectory()
     {
-        $this->assertFalse($this->root->hasChild('/machiver/media'));
+        $this->assertFalse($this->root->hasChild('media'));
         $this->expectException(Exception::class);
         $this->expectExceptionMessage('must be a directory');
         $media = new MediaManager();
@@ -31,9 +31,9 @@ class MediaManagerTest extends TestCase
 
     public function testShouldThrowExceptionOnFileInsteadOfDirectory()
     {
-        $mockFile = vfsStream::newFile('/machiver/media')
+        $mockFile = vfsStream::newFile('media')
             ->at($this->root);
-        $this->assertTrue($this->root->hasChild('/machiver/media'));
+        $this->assertTrue($this->root->hasChild('media'));
         $this->expectException(Exception::class);
         $this->expectExceptionMessage('must be a directory');
         $media = new MediaManager();

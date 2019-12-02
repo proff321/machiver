@@ -42,13 +42,16 @@ class MediaManager
             throw new Exception("Cannot open directory `{$rootDirectory}`");
         }
 
-        if (false === readdir($directoryHandle)) {
+        $fileArray = scandir($rootDirectory);
+        if (
+            count($fileArray) === 2
+            || $fileArray === false
+        ) {
             throw new Exception(
                 "Directory `{$rootDirectory}` cannot be empty"
             );
         }
-        
-        rewinddir($directoryHandle);
+
         $this->sourceDirHandle = $directoryHandle;
     }
 

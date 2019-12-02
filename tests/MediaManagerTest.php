@@ -26,7 +26,7 @@ class MediaManagerTest extends TestCase
         $this->assertFalse($this->root->hasChild('media'));
         $this->expectException(Exception::class);
         $this->expectExceptionMessage('must be a directory');
-        $media = new MediaManager();
+        $media = new MediaManager($this->root->url() . '/media');
     }
 
     public function testShouldThrowExceptionOnFileInsteadOfDirectory()
@@ -36,7 +36,7 @@ class MediaManagerTest extends TestCase
         $this->assertTrue($this->root->hasChild('media'));
         $this->expectException(Exception::class);
         $this->expectExceptionMessage('must be a directory');
-        $media = new MediaManager();
+        $media = new MediaManager($mockFile->url());
     }
 
     public function testShouldThrowExceptionOnEmptyDirectory()

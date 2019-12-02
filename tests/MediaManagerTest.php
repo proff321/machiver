@@ -41,7 +41,13 @@ class MediaManagerTest extends TestCase
 
     public function testShouldThrowExceptionOnEmptyDirectory()
     {
-        $this->markTestIncomplete('Not implemented');
+        $mediaFolder = vfsStream::newDirectory('media')
+            ->at($this->root);
+        $this->assertTrue($this->root->hasChild('media'));
+        $this->assertFalse($mediaFolder->hasChildren());
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage('cannot be empty');
+        $media = new MediaManager($mediaFolder->url());
     }
 
     public function testShouldThrowExceptionOnUnreadableDirectory()

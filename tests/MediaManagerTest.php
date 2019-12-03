@@ -59,4 +59,16 @@ class MediaManagerTest extends TestCase
     {
         $this->markTestIncomplete('Not implemented');
     }
+
+    public function testShouldOpenValidDirectory()
+    {
+        $mediaFolder = vfsStream::newDirectory('media')
+            ->at($this->root);
+        $this->assertTrue($this->root->hasChild('media'));
+        $mockFile = vfsStream::newFile('testFile.txt')
+            ->at($mediaFolder);
+        $this->assertTrue($mediaFolder->hasChildren());
+        $media = new MediaManager($mediaFolder->url());
+        $this->assertNotEmpty($media);
+    }
 }

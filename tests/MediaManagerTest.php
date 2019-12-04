@@ -52,7 +52,13 @@ class MediaManagerTest extends TestCase
 
     public function testShouldThrowExceptionOnUnreadableDirectory()
     {
-        $this->markTestIncomplete('Not implemented');
+        // Media folder is not readable
+        $mediaFolder = vfsStream::newDirectory('media', 0222)
+            ->at($this->root);
+        $this->assertTrue($this->root->hasChild('media'));
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage('Cannot open directory');
+        $media = new MediaManager($mediaFolder->url());
     }
 
     public function testShouldRewindDirectoryHandle()

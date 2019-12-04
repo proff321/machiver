@@ -38,7 +38,7 @@ class MediaManager
             throw new Exception("Location `{$rootDirectory}` must be a directory");
         }
 
-        if (false === ($directoryHandle = opendir($rootDirectory))) {
+        if (false === ($directoryHandle = @opendir($rootDirectory))) {
             throw new Exception("Cannot open directory `{$rootDirectory}`");
         }
 

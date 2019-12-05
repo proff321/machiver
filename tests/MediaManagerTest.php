@@ -61,11 +61,6 @@ class MediaManagerTest extends TestCase
         $media = new MediaManager($mediaFolder->url());
     }
 
-    public function testShouldRewindDirectoryHandle()
-    {
-        $this->markTestIncomplete('Not implemented');
-    }
-
     public function testShouldOpenValidDirectory()
     {
         $mediaFolder = vfsStream::newDirectory('media')

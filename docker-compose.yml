@@ -4,5 +4,11 @@ services:
         image: php:latest
         volumes:
             - ./:/app
-        entrypoint: ["php", "/app/vendor/phpunit/phpunit/phpunit", "--bootstrap", "/app/vendor/composer/autoload_files.php",  "/app/tests/"]
+        entrypoint: [
+            "php",
+            "/app/vendor/phpunit/phpunit/phpunit",
+            "--bootstrap",
+            "/app/vendor/composer/autoload_files.php",
+            "/app/tests/"
+            ]
         command: ["--testdox"]
